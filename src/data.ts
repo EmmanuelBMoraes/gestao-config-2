@@ -31,3 +31,7 @@ export const filmes: Filme[] = [
     ano: 2019,
   },
 ];
+
+export let proximoId =
+  filmes.length > 0 ? Math.max(...filmes.map((f) => f.id)) + 1 : 1;
+export const obterProximoId = () => proximoId++;
