@@ -38,7 +38,7 @@ routes.delete("/api/filmes/:id", (req: Request, res: Response) => {
   }
   const filmeRemovido = filmes.splice(indice, 1);
   console.log("Filme removido:", filmeRemovido[0]);
-  return res.status(200).json({ mensagem: "Filme removido com sucesso." });
+  return res.status(204).send();
 });
 
 export default routes;

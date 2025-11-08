@@ -1,7 +1,14 @@
-import request from "supertest";
-import app from "./app";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let request: any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let app: any;
 
 describe("Testes da API", () => {
+  beforeEach(() => {
+    jest.resetModules();
+    request = require("supertest");
+    app = require("./app").default;
+  });
   it("Deve retornar todos os filmes", async () => {
     const res = await request(app).get("/api/filmes");
     expect(res.statusCode).toEqual(200);
@@ -32,8 +39,7 @@ describe("Testes da API", () => {
     const filmeId = adicionarRes.body.id;
 
     const res = await request(app).delete(`/api/filmes/${filmeId}`);
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty("mensagem", "Filme removido com sucesso.");
+    expect(res.statusCode).toEqual(204);
   });
 
   it("Deve retornar 404 ao tentar remover um filme inexistente", async () => {
