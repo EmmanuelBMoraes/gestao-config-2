@@ -1,14 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let request: any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let app: any;
+import request from "supertest";
+import app from "./app";
 
 describe("Testes da API", () => {
-  beforeEach(() => {
-    jest.resetModules();
-    request = require("supertest");
-    app = require("./app").default;
-  });
   it("Deve retornar todos os filmes", async () => {
     const res = await request(app).get("/api/filmes");
     expect(res.statusCode).toEqual(200);
