@@ -46,5 +46,15 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "noImplicitAny": true
-  }
+  },
+  "include": [
+    "src/**/*" // Diz ao TypeScript para SÓ olhar dentro da pasta 'src'
+  ],
+  "exclude": [
+    "node_modules", // Ignora dependências
+    "dist", // Ignora a pasta de saída
+    "jest.config.js", // Ignora o arquivo de config do Jest
+    "**/*.spec.ts", // Ignora arquivos de teste
+    "**/*.test.ts" // Ignora arquivos de teste
+  ]
 }
