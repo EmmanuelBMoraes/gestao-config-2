@@ -29,4 +29,16 @@ routes.post("/api/filmes", (req: Request, res: Response) => {
   return res.status(201).json(novoFilme);
 });
 
+routes.delete("/api/filmes/:id", (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const indice = filmes.findIndex((filme) => filme.id === parseInt(id!));
+  if (indice === -1) {
+    return res.status(404).json({ mensagem: "Filme não encontrado." });
+  }
+  const filmeRemovido = filmes.splice(indice, 1);
+  console.log("Filme removido:", filmeRemovido[0]);
+  return res.status(200).json({ mensagem: "Filme removido com sucesso." });
+});
+
 export default routes;
