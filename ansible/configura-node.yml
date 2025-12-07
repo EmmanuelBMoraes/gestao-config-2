@@ -1,0 +1,44 @@
+- name: Deploy API-FILMES no Play with Docker (Modo Shell)
+  hosts: servidores
+  gather_facts: no
+  become: no
+
+  vars:
+    api_image: emmanuelbm/api-filmes:latest
+    api_container: api-filmes
+    host_port: 8080
+    container_port: 8080
+
+  tasks:
+    - name: Garantir Python3 instalado
+      raw: apk add --no-cache python3
+      changed_when: false
+
+    - name: Remover container antigo
+      shell: docker rm -f {{ api_container }} || true
+      tags: deploy
+
+    - name: Subir container API-FILMES
+      shell: |
+        docker run -d \
+        --name {{ api_container }} \
+        --restart always \
+        -p {{ host_port }}:{{ container_port }} \
+        {{ api_image }}
+      tags: deploy
+
+    - name: Aguardar API iniciar na porta {{ host_port }}
+      wait_for:
+        port: "{{ host_port }}"
+        host: "{{ inventory_hostname }}"
+        delay: 5
+        timeout: 60
+
+    - name: Testar endpoint GET /api/filmes
+      shell: curl -s -o /dev/null -w "%{http_code}" http://localhost:{{ host_port }}/api/filmes
+      register: api_status
+      failed_when: api_status.stdout != "200"
+
+    - name: Mostrar Status da API
+      debug:
+        msg: "API respondeu com código HTTP: {{ api_status.stdout }}"
