@@ -1,5 +1,6 @@
 # API de Filmes
 
+[![Docker Image](https://img.shields.io/badge/DockerHub-emmanuelbm%2Fapi--filmes-blue?logo=docker&logoColor=white)](https://hub.docker.com/r/emmanuelbm/api-filmes)
 Esta é uma API RESTful para gerenciar um catálogo de filmes. Permite criar, ler, atualizar e deletar filmes.
 
 ## ✨ Funcionalidades
